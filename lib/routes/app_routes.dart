@@ -41,6 +41,8 @@ class AppRoutes {
   static const String appNavigationScreen = '/app_navigation_screen';
 
   static const String initialRoute = '/initialRoute';
+  
+  static const String libraryPage = '/library_page';
 
   static Map<String, WidgetBuilder> routes = {
     loadingScreen: (context) => LoadingScreen(),

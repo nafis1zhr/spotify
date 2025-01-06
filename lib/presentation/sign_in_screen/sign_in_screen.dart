@@ -1,135 +1,211 @@
 import 'package:flutter/material.dart';
-import 'package:spotify/theme/costum_button_style.dart';
-import 'package:spotify/theme/costum_text_style.dart';
-import 'package:spotify/widgets/costum_elevated_button.dart';
-import 'package:spotify/widgets/costum_image_view.dart';
-import 'package:spotify/widgets/costum_text_form_field.dart';
-import '../../core/app_export.dart';
-import 'package:spotify/theme/custom_button_style.dart';
-import '../../widgets/app_bar/appbar_leading_iconbutton_two.dart';
-import '../../widgets/app_bar/appbar_title_image.dart';
-import '../../widgets/app_bar/custom_app_bar.dart';
-import '../../widgets/custom_elevated_button.dart';
-import '../../widgets/custom_text_form_field.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-// ignore_for_file: must_be_immutable
 
 class SignInScreen extends StatelessWidget {
-  SignInScreen({Key? key}) : super(key: key);
-
+  // Tetap gunakan final untuk membuatnya bersifat immutable, tetapi tanpa `const`
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  SignInScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: appTheme.gray10001,
-        resizeToAvoidBottomInset: false,
-        appBar: _buildAppBar(context),
-        body: Form(
-          key: _formKey,
-          child: Container(
-            width: double.maxFinite,
-            padding: EdgeInsets.all(26.h),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Sign in",
-                  style: theme.textTheme.headlineLarge,
-                ),
-                SizedBox(height: 22.h),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "If you need any support, ",
-                        style: CustomTextStyles.bodySmallGray80003,
+    final Size screenSize = MediaQuery.of(context).size;
+    final double horizontalPadding = screenSize.width * 0.08;
+
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/spotify_logo.png',
+              height: 32,
+            ),
+          ],
+        ),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(height: 32),
+                  const Text(
+                    'Sign in',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Center(
+                    child: RichText(
+                      text: TextSpan(
+                        text: 'If you need any support ',
+                        style: TextStyle(color: Colors.grey[400]),
+                        children: const [
+                          TextSpan(
+                            text: 'click here',
+                            style: TextStyle(color: Colors.green),
+                          ),
+                        ],
                       ),
-                      TextSpan(
-                        text: "click here",
-                        style: CustomTextStyles.bodySmallGreen600,
-                      ),
-                    ],
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-                SizedBox(height: 20.h),
-                CustomTextFormField(
-                  controller: userNameController,
-                  obscureText: false,
-                  contentPadding: EdgeInsets.all(26.h),
-                  decoration: InputDecoration(
-                    labelText: 'Username',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                SizedBox(height: 20.h),
-                CustomTextFormField(
-                  controller: passwordController,
-                  obscureText: true,
-                  contentPadding: EdgeInsets.all(26.h),
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                SizedBox(height: 20.h),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 18.h),
-                    child: Text(
-                      "Recovery password",
-                      style: theme.textTheme.titleSmall,
                     ),
                   ),
-                ),
-                SizedBox(height: 22.h),
-                CustomElevatedButton(
-                  height: 80.h,
-                  text: "Sign In",
-                  margin: EdgeInsets.only(left: 6.h, right: 4.h),
-                  buttonStyle: CustomButtonStyles.none,
-                  buttonTextStyle: CustomTextStyles.titleLargeOnPrimaryContainer,
-                ),
-                SizedBox(height: 20.h),
-                _buildDividerRow(context),
-                SizedBox(height: 34.h),
-                SizedBox(
-                  width: 116.h,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomImageView(
-                        imagePath: ImageConstant.imgGoogle,
-                        height: 28.h,
-                        width: 28.h,
-                        alignment: Alignment.bottomCenter,
+                  const SizedBox(height: 32),
+                  // Username/Email TextField
+                  TextFormField(
+                    controller: userNameController,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      hintText: 'Enter username or email',
+                      hintStyle: TextStyle(color: Colors.grey[400]),
+                      filled: true,
+                      fillColor: Colors.grey[900],
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: BorderSide.none,
                       ),
-                      CustomImageView(
-                        imagePath: ImageConstant.imgVector,
-                        height: 36.h,
-                        width: 30.h,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 16,
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter username or email';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  // Password TextField
+                  TextFormField(
+                    controller: passwordController,
+                    obscureText: true,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      hintText: 'Password',
+                      hintStyle: TextStyle(color: Colors.grey[400]),
+                      filled: true,
+                      fillColor: Colors.grey[900],
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: BorderSide.none,
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 16,
+                      ),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.visibility_off, color: Colors.grey),
+                        onPressed: () {
+                          // Toggle password visibility
+                        },
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter password';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  // Recovery Password Button
+                  TextButton(
+                    onPressed: () {
+                      // Handle recovery password
+                    },
+                    child: Text(
+                      'Recovery password',
+                      style: TextStyle(color: Colors.grey[400]),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  // Sign In Button
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        // Handle sign in
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF1DB954),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    child: const Text(
+                      'Sign in',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  // Or divider
+                  Row(
+                    children: [
+                      Expanded(child: Divider(color: Colors.grey[800])),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          'or',
+                          style: TextStyle(color: Colors.grey[400]),
+                        ),
+                      ),
+                      Expanded(child: Divider(color: Colors.grey[800])),
+                    ],
+                  ),
+                  const SizedBox(height: 32),
+                  // Social Buttons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _socialButton('assets/images/google.png'),
+                      const SizedBox(width: 16),
+                      _socialButton('assets/images/apple.png'),
+                    ],
+                  ),
+                  const SizedBox(height: 32),
+                  // Register Now
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'not a member? ',
+                        style: TextStyle(color: Colors.grey[400]),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          // Navigate to register screen
+                        },
+                        child: const Text(
+                          'register now',
+                          style: TextStyle(color: Color(0xFF1DB954)),
+                        ),
                       ),
                     ],
                   ),
-                ),
-                SizedBox(height: 56.h),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "not a member?",
-                        style: theme.textTheme.titleSmall,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -137,36 +213,20 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDividerRow(BuildContext context) {
+  Widget _socialButton(String iconPath) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 4.h),
-      width: double.maxFinite,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 6.h),
-              child: Divider(),
-            ),
-          ),
-          SizedBox(width: 10.h),
-          Align(
-            alignment: Alignment.center,
-            child: Text(
-              "or",
-              style: CustomTextStyles.bodySmallGray80003,
-            ),
-          ),
-          SizedBox(width: 10.h),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 6.h),
-              child: Divider(),
-            ),
-          ),
-        ],
+      width: 50,
+      height: 50,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey[800]!),
+        shape: BoxShape.circle,
+      ),
+      child: Center(
+        child: Image.asset(
+          iconPath,
+          width: 24,
+          height: 24,
+        ),
       ),
     );
   }

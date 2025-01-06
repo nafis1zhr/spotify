@@ -36,6 +36,7 @@ dependencies:
   cached_network_image: ^3.3.0
   flutter_localizations: # Tambahkan indentasi ini
     sdk: flutter # Perbaiki indentasi untuk sdk
+  flutter_riverpod: ^2.0.0
 
   cupertino_icons: ^1.0.8
 
@@ -43,6 +44,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  file_picker: ^5.0.0
+  audioplayers: ^0.20.1
+  just_audio: ^0.9.28
 
 flutter:
   uses-material-design: true
@@ -53,6 +57,10 @@ flutter:
     - assets/images/bule2.png
     - assets/images/ruwet1.png
     - assets/images/ruwet2.png
+    - assets/images/apple.png
+    - assets/audio/song1.mp3
+    - assets/audio/song2.mp3
+    - assets/audio/song3.mp3
 
 
   # To add assets to your application, add an assets section, like this:
